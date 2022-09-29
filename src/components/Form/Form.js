@@ -21,7 +21,7 @@ class Form extends Component {
       evt.preventDefault();
       
       //передаем форме данные в App
-      this.props.onSubmit(this.state.name);
+      this.props.onSubmit(this.state.name, this.state.number);
       this.reset();
 
     console.log(this.state);

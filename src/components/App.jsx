@@ -14,13 +14,13 @@ export class App extends Component {
     
   };
 
-  formSubmitHandler = data => {
-    console.log(data);
+  formSubmitHandler = (name, number) => {
+    // console.log(data);
 
     const contact = {
       id: nanoid(),
-      name: data.name,
-      number: data.number,
+      name: name,
+      number: number,
     };
 
     // Добавляем запись в state - распыляем новую запись в список контактов
