@@ -8,9 +8,6 @@ class Form extends Component {
     }
 
     handleInputChange = event => {
-    // console.log(event.currentTarget.name)
-    // console.log(event.currentTarget.value);
-
     const { name, value } = event.currentTarget;
     this.setState({
       [name]: value,
@@ -48,7 +45,7 @@ class Form extends Component {
                         onChange={this.handleInputChange}
                         id={this.nameId} />
                 </label> 
-                 <label htmlFor={this.numberId}>Name
+                 <label htmlFor={this.numberId}>Number
                 <input
                         type="tel"
                         name="number" //name cовпадает с полем в state.name!!

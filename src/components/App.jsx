@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { nanoid } from 'nanoid';
 import Form from "./Form/Form";
-import ContactList from './ContactList/ContactList'
+import Filter from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
 
 export class App extends Component {
   state = {
@@ -11,12 +12,10 @@ export class App extends Component {
     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
-    
+    filter: '',
   };
 
   formSubmitHandler = (name, number) => {
-    // console.log(data);
-
     const contact = {
       id: nanoid(),
       name: name,
@@ -25,25 +24,36 @@ export class App extends Component {
 
     // Добавляем запись в state - распыляем новую запись в список контактов
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, contact],
-      // contacts: [prevState.contacts].push(contact);
+      contacts: [contact, ...prevState.contacts],
     }));
   };
 
+  FilterInput = (evt) => {
+    this.setState({ filter: evt.currentTarget.value })
+  }
+
+  getVisibleContacts = () => {
+    const { filter, contacts } = this.state;
+     const normalizedFilter = filter.toLowerCase();
+   
+     //выбираем список по фильтру, что быдем рендерить
+    return contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedFilter));
+  }
+
   render() {
+    const { filter } = this.state;
+    const visibleContacts = this.getVisibleContacts();
+
     return (
-    <div>
+      <div>
+        <h1>Phonebook</h1>
         <Form onSubmit={this.formSubmitHandler} />
         <h2> Contacts</h2>
-        <ContactList items={this.state.contacts } />
-      
+
+        <Filter value={filter} onChange={this.FilterInput} />
+        <ContactList items={visibleContacts} />
       </div> 
     )
   }
 }
-  
-// export App;
-  // ReactDOM.render(
-  //   <App onSubmit={values => console.log(values)} />,
-  //   document.getElementById("root")
-  // );
