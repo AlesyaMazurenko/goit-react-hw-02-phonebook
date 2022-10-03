@@ -28,6 +28,16 @@ export class App extends Component {
     }));
   };
 
+  removeContact = (id) => {
+    this.setState((prev) => {
+      const newContacts = prev.contacts.filter((item) => item.id !== id);
+
+      return {
+        contacts: newContacts
+      }
+    })
+  }
+
   FilterInput = (evt) => {
     this.setState({ filter: evt.currentTarget.value })
   }
@@ -42,17 +52,18 @@ export class App extends Component {
   }
 
   render() {
+    const { formSubmitHandler, removeContact } = this;
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
 
     return (
       <div>
         <h1>Phonebook</h1>
-        <Form onSubmit={this.formSubmitHandler} />
+        <Form onSubmit={formSubmitHandler} />
         <h2> Contacts</h2>
 
         <Filter value={filter} onChange={this.FilterInput} />
-        <ContactList items={visibleContacts} />
+        <ContactList items={visibleContacts} removeContact={removeContact} />
       </div> 
     )
   }
